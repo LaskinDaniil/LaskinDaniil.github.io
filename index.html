@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Даниил Ласкин — Портфолио</title>
     <style>
-        /* ЭКРАН 0: ВКЛЮЧЕНИЕ ЗВУКА */
+        
         #audio-unlock-screen {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -30,7 +30,6 @@
             line-height: 1.4;
         }
 
-        /* Стили для текста ошибки */
         #error-msg {
             color: #ff6b6b;
             font-size: 1.2rem;
@@ -59,7 +58,7 @@
             transform: scale(1.05);
         }
 
-        /* ЭКРАН 1: ЗАСТАВКА С УБЕГАЮЩЕЙ КНОПКОЙ */
+        
         #landing-screen {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -119,7 +118,7 @@
             z-index: 10;
         }
 
-        /* СТИЛИ ДЛЯ ОСНОВНОГО САЙТА */
+        
         #portfolio-screen {
             display: none;
             width: 100%;
@@ -265,26 +264,26 @@
 </head>
 <body>
 
-    <!-- АУДИО. Ищет файл music.mp3 в той же папке, где лежит этот html -->
+    
     <audio id="bg-music">
         <source src="music.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- ЭКРАН 1: ВКЛЮЧЕНИЕ ЗВУКА -->
+    
     <div id="audio-unlock-screen">
         <h1>Чтобы сайт работал так, как задумано, пожалуйста, заходите на него с ноутбука и включите звук 🔊</h1>
         <button id="unlock-btn" class="btn-unlock">Включить звук</button>
         <div id="error-msg"></div>
     </div>
 
-    <!-- ЭКРАН 2: УБЕГАЮЩАЯ КНОПКА -->
+    
     <div id="landing-screen">
         <img id="jane-gif" src="https://media1.tenor.com/m/KRGfQXuQqbYAAAAC/jane.gif" alt="Jane">
         <div id="joke-text">Шутка, заходите))</div>
         <button id="runaway-btn" class="btn-enter" onclick="enterSite()">ВОЙТИ</button>
     </div>
 
-    <!-- ЭКРАН 3: ПОРТФОЛИО -->
+    
     <div id="portfolio-screen">
         <div class="marquee-wrapper">
             <div class="marquee-row"><div class="marquee-content"><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span></div></div>
@@ -322,7 +321,7 @@
         </div>
     </div>
 
-    <!-- ЛОГИКА РАБОТЫ -->
+    
     <script>
         const unlockBtn = document.getElementById('unlock-btn');
         const unlockScreen = document.getElementById('audio-unlock-screen');
@@ -336,7 +335,7 @@
         let attempts = 0;
         let audioStarted = false;
 
-        // Проверка на ошибку файла
+        
         audio.addEventListener('error', function() {
             errorMsg.style.display = 'block';
             errorMsg.innerText = "Ошибка: Браузер не может найти или прочитать файл 'music.mp3'. Проверьте, лежит ли он в той же папке.";
@@ -371,7 +370,6 @@
                 btn.removeEventListener('mouseover', moveButton);
                 jokeText.style.display = 'block';
                 janeGif.style.opacity = '1';
-                // Перематываем музыку ровно на 6 секунду
                 if (audioStarted) { audio.currentTime = 6; }
                 btn.style.left = '50%'; btn.style.top = '60%'; btn.style.transform = 'translate(-50%, -50%)';
                 return; 
@@ -386,7 +384,7 @@
         btn.addEventListener('mouseover', moveButton);
 
         function enterSite() {
-            if (audioStarted) { audio.pause(); } // Музыка выключается при входе на сайт
+            if (audioStarted) { audio.pause(); } 
             landingScreen.style.opacity = '0';
             setTimeout(() => {
                 landingScreen.style.display = 'none';
