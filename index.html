@@ -334,7 +334,7 @@
         
         let attempts = 0;
         let audioStarted = false;
-        let isLooping = true; // Флаг для зацикливания первых секунд
+        let isLooping = true; 
 
         
         audio.addEventListener('error', function() {
@@ -342,7 +342,7 @@
             errorMsg.innerText = "Ошибка: Браузер не может найти или прочитать файл 'music.mp3'. Проверьте, лежит ли он в той же папке.";
         });
 
-        // Следим за временем: если играет 6-я секунда и мы еще не дошли до шутки - кидаем на 1-ю
+        
         audio.addEventListener('timeupdate', function() {
             if (isLooping && audio.currentTime >= 5.5) {
                 audio.currentTime = 1;
@@ -379,7 +379,7 @@
                 jokeText.style.display = 'block';
                 janeGif.style.opacity = '1';
                 
-                // Отключаем цикл, чтобы музыка пошла дальше
+                
                 isLooping = false; 
                 
                 if (audioStarted) { 
