@@ -217,10 +217,11 @@
 
         .sidebar img:hover { transform: scale(1.05); }
 
+        /* ИСПРАВЛЕНО ЗДЕСЬ: убран черный фон и включена обрезка */
         .iron-man {
-            object-fit: contain !important;
-            background-color: #111 !important;
-            padding: 10px;
+            object-fit: cover !important;
+            background-color: transparent !important;
+            padding: 0 !important;
         }
 
         .mbappe-dictator {
@@ -310,7 +311,6 @@
 
             <div class="sidebar right">
                 <img class="mbappe-dictator" src="https://ss.sport-express.ru/userfiles/materials/220/2205162/1180x665.jpg" onerror="this.src='https://placehold.co/220x250/2c3e50/ffffff?text=Mbappe'" alt="Мбаппе">
-                
                 
                 <img class="iron-man" src="ironman.jpg" onerror="this.src='https://placehold.co/220x250/2c3e50/ffffff?text=Iron+Man'" alt="Железный человек">
                 
