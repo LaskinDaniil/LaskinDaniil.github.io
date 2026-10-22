@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Даниил Ласкин — Портфолио</title>
+    <style>
+        /* ЭКРАН 0: ВКЛЮЧЕНИЕ ЗВУКА */
+        #audio-unlock-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10001;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: opacity 0.5s ease;
+        }
+
+        #audio-unlock-screen h1 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            line-height: 1.4;
+        }
+
+        /* Стили для текста ошибки */
+        #error-msg {
+            color: #ff6b6b;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            display: none;
+            max-width: 600px;
+            font-weight: bold;
+        }
+
+        .btn-unlock {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+            z-index: 10005;
+        }
+
+        .btn-unlock:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        /* ЭКРАН 1: ЗАСТАВКА С УБЕГАЮЩЕЙ КНОПКОЙ */
+        #landing-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #111; 
+            z-index: 10000;
+            overflow: hidden;
+            transition: opacity 0.5s ease;
+            display: none;
+        }
+
+        #jane-gif {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0; 
+            transition: opacity 1s ease; 
+            z-index: 1;
+        }
+
+        #joke-text {
+            position: absolute;
+            top: 30vh;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            font-size: 3.5rem;
+            font-weight: 900;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.9);
+            display: none; 
+            pointer-events: none; 
+            z-index: 10;
+            animation: popIn 0.5s ease;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .btn-enter {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.5rem;
+            font-weight: 900;
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 20px rgba(231, 76, 60, 0.6);
+            transition: top 0.15s ease-out, left 0.15s ease-out, transform 0.15s ease;
+            z-index: 10;
+        }
+
+        /* СТИЛИ ДЛЯ ОСНОВНОГО САЙТА */
+        #portfolio-screen {
+            display: none;
+            width: 100%;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #333; 
+            background-color: #eef2f5; 
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        .marquee-wrapper {
+            position: fixed;
+            top: -20%; left: -20%; width: 140%; height: 140%;
+            z-index: 9999;
+            pointer-events: none;
+            overflow: hidden;
+            transform: rotate(-25deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .marquee-row {
+            white-space: nowrap;
+            font-size: 60px;
+            font-weight: 900;
+            color: rgba(44, 62, 80, 0.15);
+            text-transform: uppercase;
+            font-family: Impact, sans-serif;
+            letter-spacing: 5px;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: scroll-left 15s linear infinite;
+        }
+
+        .marquee-content.reverse {
+            animation: scroll-right 15s linear infinite;
+        }
+
+        .marquee-content span { padding-right: 50px; }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes scroll-right {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
+        .layout {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1400px;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 220px;
+            flex-shrink: 0;
+            position: sticky; 
+            top: 20px;
+            height: fit-content;
+        }
+
+        .sidebar img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+            background-color: #ccc;
+        }
+
+        .sidebar img:hover { transform: scale(1.05); }
+
+        .iron-man {
+            object-fit: contain !important;
+            background-color: #111 !important;
+            padding: 10px;
+        }
+
+        .mbappe-dictator {
+            filter: sepia(1) contrast(1.5) grayscale(0.5) !important;
+        }
+
+        .main-content {
+            width: 100%;
+            max-width: 800px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            background: rgba(255, 255, 255, 0.92);
+        }
+
+        header { 
+            text-align: center; 
+            padding: 20px 0; 
+            border-bottom: 2px solid #f0f0f0;
+            margin-bottom: 20px;
+        }
+        h1 { margin-bottom: 5px; color: #2c3e50; }
+        h2 { color: #34495e; border-bottom: 2px solid #3498db; padding-bottom: 5px; margin-top: 30px; }
+        .subtitle { color: #7f8c8d; font-size: 1.2em; }
+        
+        section { margin-bottom: 20px; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; }
+        a { color: #3498db; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+
+        @media (max-width: 1150px) {
+            .sidebar { display: none; }
+            body { padding: 10px; }
+            .main-content { padding: 20px; }
+            .marquee-row { font-size: 40px; }
+            .btn-enter { padding: 15px 40px; font-size: 1.2rem; }
+            #joke-text { font-size: 2rem; top: 25vh; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- АУДИО. Ищет файл music.mp3 в той же папке, где лежит этот html -->
+    <audio id="bg-music">
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ЭКРАН 1: ВКЛЮЧЕНИЕ ЗВУКА -->
+    <div id="audio-unlock-screen">
+        <h1>Чтобы сайт работал так как задумано включите звук 🔊</h1>
+        <button id="unlock-btn" class="btn-unlock">Включить звук</button>
+        <div id="error-msg"></div>
+    </div>
+
+    <!-- ЭКРАН 2: УБЕГАЮЩАЯ КНОПКА -->
+    <div id="landing-screen">
+        <img id="jane-gif" src="https://media1.tenor.com/m/KRGfQXuQqbYAAAAC/jane.gif" alt="Jane">
+        <div id="joke-text">Шутка, заходите))</div>
+        <button id="runaway-btn" class="btn-enter" onclick="enterSite()">ВОЙТИ</button>
+    </div>
+
+    <!-- ЭКРАН 3: ПОРТФОЛИО -->
+    <div id="portfolio-screen">
+        <div class="marquee-wrapper">
+            <div class="marquee-row"><div class="marquee-content"><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span></div></div>
+            <div class="marquee-row"><div class="marquee-content reverse"><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span></div></div>
+            <div class="marquee-row"><div class="marquee-content"><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span></div></div>
+            <div class="marquee-row"><div class="marquee-content reverse"><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span></div></div>
+        </div>
+
+        <div class="layout">
+            <div class="sidebar left">
+                <img src="https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/8/8c/Cristiano_Ronaldo_2018.jpg" onerror="this.src='https://placehold.co/220x250/2c3e50/ffffff?text=Ronaldo'" alt="Роналду">
+                <img src="https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/b/b4/Lionel-Messi-Argentina-2022-FIFA-World-Cup_%28cropped%29.jpg" onerror="this.src='https://placehold.co/220x250/2c3e50/ffffff?text=Messi'" alt="Месси">
+                <img src="https://s-cdn.sportbox.ru/images/styles/upload/fp_fotos/56/47/38ea8f18235c70de2b3a1813b6c74696667579a851401450615467.jpg" onerror="this.src='https://placehold.co/220x250/2c3e50/ffffff?text=Yamal'" alt="Ямаль">
+                <img src="https://kinotv.ru/upload/resize_cache/iblock/2a4/1200_1200_1/q26qvmk3fibh34oklxw3avtowe9oq90u.jpg" onerror="this.src='https://placehold.co/220x250/2c3e50/ffffff?text=Gabe'" alt="Гейб Ньюэлл">
+            </div>
+
+            <div class="main-content">
+                <header>
+                    <h1>Даниил Ласкин</h1>
+                    <p class="subtitle">Студент / Начинающий разработчик</p>
+                </header>
+                <section><h2>Обо мне</h2><p>Здравствуйте! Меня зовут Даниил. Я учусь в хсе и делаю домашку по омп.</p></section>
+                <section><h2>Навыки</h2><ul><li>C++</li><li>Python</li><li>Git</li><li>Игра на фортепиано</li><li>Игра на барабанах</li><li>Играю в футбол</li></ul></section>
+                <section><h2>Опыт и проекты</h2><ul><li><strong>Сайт-портфолио:</strong> Только что создал и захостил страницу на GitHub Pages.</li><li><strong>Учебные проекты:</strong> Буду делать какой то проект по ML в этом году</li></ul></section>
+                <section><h2>Достижения</h2><ul><li>ЕГЭ по матеше на 100.</li><li>Уже построил дом, посадил дерево, осталось только одно задание</li></ul></section>
+                <section><h2>Контакты</h2><p>Мой профиль на GitHub: <a href="https://github.com/LaskinDaniil">LaskinDaniil</a></p></section>
+            </div>
+
+            <div class="sidebar right">
+                <img class="mbappe-dictator" src="https://ss.sport-express.ru/userfiles/materials/220/2205162/1180x665.jpg" onerror="this.src='https://placehold.co/220x250/2c3e50/ffffff?text=Mbappe'" alt="Мбаппе">
+                <img class="iron-man" src="https://images.meme-arsenal.com/ce0c7cf910cd8eef9195f6406166bda0.jpg" onerror="this.src='https://placehold.co/220x250/2c3e50/ffffff?text=Iron+Man'" alt="Железный человек">
+                <img src="https://avatars.mds.yandex.net/i?id=13583b76bb5be52268e962712281181a_l-10234572-images-thumbs&n=13" onerror="this.src='https://placehold.co/220x250/2c3e50/ffffff?text=Elon'" alt="Илон Маск">
+                <img src="https://i.pinimg.com/736x/20/ac/5e/20ac5eddaa68b9a80b7851941a3fc4f6.jpg" onerror="this.src='https://placehold.co/220x250/2c3e50/ffffff?text=Doge'" alt="Доге">
+            </div>
+        </div>
+    </div>
+
+    <!-- ЛОГИКА РАБОТЫ -->
+    <script>
+        const unlockBtn = document.getElementById('unlock-btn');
+        const unlockScreen = document.getElementById('audio-unlock-screen');
+        const landingScreen = document.getElementById('landing-screen');
+        const btn = document.getElementById('runaway-btn');
+        const jokeText = document.getElementById('joke-text');
+        const janeGif = document.getElementById('jane-gif');
+        const audio = document.getElementById('bg-music');
+        const errorMsg = document.getElementById('error-msg');
+        
+        let attempts = 0;
+        let audioStarted = false;
+
+        // Проверка на ошибку файла
+        audio.addEventListener('error', function() {
+            errorMsg.style.display = 'block';
+            errorMsg.innerText = "Ошибка: Браузер не может найти или прочитать файл 'music.mp3'. Проверьте, лежит ли он в той же папке.";
+        });
+
+        unlockBtn.addEventListener('click', function() {
+            audio.volume = 0.5;
+            audio.currentTime = 1; 
+            
+            let playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    audioStarted = true;
+                }).catch(e => {
+                    errorMsg.style.display = 'block';
+                    errorMsg.innerText = "Ошибка: " + e.message;
+                });
+            }
+            
+            unlockScreen.style.opacity = '0';
+            setTimeout(() => {
+                unlockScreen.style.display = 'none';
+                landingScreen.style.display = 'block';
+                landingScreen.style.opacity = '1';
+            }, 500);
+        });
+
+        function moveButton() {
+            attempts++; 
+            if (attempts >= 3) {
+                btn.removeEventListener('mouseover', moveButton);
+                jokeText.style.display = 'block';
+                janeGif.style.opacity = '1';
+                // Перематываем музыку ровно на 6 секунду
+                if (audioStarted) { audio.currentTime = 6; }
+                btn.style.left = '50%'; btn.style.top = '60%'; btn.style.transform = 'translate(-50%, -50%)';
+                return; 
+            }
+            const maxX = window.innerWidth - btn.offsetWidth - 40;
+            const maxY = window.innerHeight - btn.offsetHeight - 40;
+            btn.style.left = Math.max(20, Math.floor(Math.random() * maxX)) + 'px';
+            btn.style.top = Math.max(20, Math.floor(Math.random() * maxY)) + 'px';
+            btn.style.transform = 'none'; 
+        }
+
+        btn.addEventListener('mouseover', moveButton);
+
+        function enterSite() {
+            if (audioStarted) { audio.pause(); } // Музыка выключается при входе на сайт
+            landingScreen.style.opacity = '0';
+            setTimeout(() => {
+                landingScreen.style.display = 'none';
+                document.getElementById('portfolio-screen').style.display = 'block';
+            }, 500);
+        }
+    </script>
+</body>
+</html>
