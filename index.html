@@ -344,7 +344,7 @@
 
         // Следим за временем: если играет 6-я секунда и мы еще не дошли до шутки - кидаем на 1-ю
         audio.addEventListener('timeupdate', function() {
-            if (isLooping && audio.currentTime >= 6) {
+            if (isLooping && audio.currentTime >= 5.5) {
                 audio.currentTime = 1;
             }
         });
