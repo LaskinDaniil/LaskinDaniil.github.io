@@ -264,26 +264,22 @@
 </head>
 <body>
 
-    
     <audio id="bg-music">
         <source src="music.mp3" type="audio/mpeg">
     </audio>
 
-    
     <div id="audio-unlock-screen">
         <h1>Чтобы сайт работал так, как задумано, пожалуйста, заходите на него с ноутбука и включите звук 🔊</h1>
         <button id="unlock-btn" class="btn-unlock">Включить звук</button>
         <div id="error-msg"></div>
     </div>
 
-    
     <div id="landing-screen">
         <img id="jane-gif" src="https://media1.tenor.com/m/KRGfQXuQqbYAAAAC/jane.gif" alt="Jane">
         <div id="joke-text">Шутка, заходите))</div>
         <button id="runaway-btn" class="btn-enter" onclick="enterSite()">ВОЙТИ</button>
     </div>
 
-    
     <div id="portfolio-screen">
         <div class="marquee-wrapper">
             <div class="marquee-row"><div class="marquee-content"><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span><span>gdz.ru</span></div></div>
@@ -314,14 +310,16 @@
 
             <div class="sidebar right">
                 <img class="mbappe-dictator" src="https://ss.sport-express.ru/userfiles/materials/220/2205162/1180x665.jpg" onerror="this.src='https://placehold.co/220x250/2c3e50/ffffff?text=Mbappe'" alt="Мбаппе">
-                <img class="iron-man" src="https://images.meme-arsenal.com/ce0c7cf910cd8eef9195f6406166bda0.jpg" onerror="this.src='https://placehold.co/220x250/2c3e50/ffffff?text=Iron+Man'" alt="Железный человек">
+                
+                <!-- ТЕПЕРЬ ЖЕЛЕЗНЫЙ ЧЕЛОВЕК БЕРЕТСЯ ИЗ ВАШЕГО РЕПОЗИТОРИЯ (файл ironman.jpg) -->
+                <img class="iron-man" src="ironman.jpg" onerror="this.src='https://placehold.co/220x250/2c3e50/ffffff?text=Iron+Man'" alt="Железный человек">
+                
                 <img src="https://avatars.mds.yandex.net/i?id=13583b76bb5be52268e962712281181a_l-10234572-images-thumbs&n=13" onerror="this.src='https://placehold.co/220x250/2c3e50/ffffff?text=Elon'" alt="Илон Маск">
                 <img src="https://i.pinimg.com/736x/20/ac/5e/20ac5eddaa68b9a80b7851941a3fc4f6.jpg" onerror="this.src='https://placehold.co/220x250/2c3e50/ffffff?text=Doge'" alt="Доге">
             </div>
         </div>
     </div>
 
-    
     <script>
         const unlockBtn = document.getElementById('unlock-btn');
         const unlockScreen = document.getElementById('audio-unlock-screen');
@@ -336,15 +334,13 @@
         let audioStarted = false;
         let isLooping = true; 
 
-        
         audio.addEventListener('error', function() {
             errorMsg.style.display = 'block';
             errorMsg.innerText = "Ошибка: Браузер не может найти или прочитать файл 'music.mp3'. Проверьте, лежит ли он в той же папке.";
         });
 
-        
         audio.addEventListener('timeupdate', function() {
-            if (isLooping && audio.currentTime >= 5.5) {
+            if (isLooping && audio.currentTime >= 6) {
                 audio.currentTime = 1;
             }
         });
@@ -378,7 +374,6 @@
                 btn.removeEventListener('mouseover', moveButton);
                 jokeText.style.display = 'block';
                 janeGif.style.opacity = '1';
-                
                 
                 isLooping = false; 
                 
